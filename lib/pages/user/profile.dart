@@ -39,9 +39,14 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Column(
         children: [
+          CircleAvatar(
+            backgroundImage:
+                NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
+            radius: 50,
+          ),
           Text(
             'User ID: $uid',
             style: TextStyle(fontSize: 16.0),
@@ -52,6 +57,14 @@ class _ProfileState extends State<Profile> {
                 'Email: $email',
                 style: TextStyle(fontSize: 16.0, color: Colors.blueAccent),
               ),
+              user!.emailVerified
+                  ? Text(
+                      'verified',
+                      style: TextStyle(fontSize: 12.0, color: Colors.blueGrey),
+                    )
+                  : TextButton(
+                      onPressed: () => {verifyEmail()},
+                      child: Text('Verify Email'))
             ],
           ),
           Text(
