@@ -74,54 +74,59 @@ class _UserMainState extends State<UserMain> {
           selectedItemColor: Colors.pink,
           onTap: _onItemTapped,
         ),
-        floatingActionButton: FabCircularMenu(fabColor: Colors.red, children: [
-          Tooltip(
-            message: "Breakfast",
-            child: IconButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Breakfast())),
-              icon: Icon(
-                Icons.free_breakfast_outlined,
-                color: Colors.white,
+        floatingActionButton: FabCircularMenu(
+            fabOpenIcon: Icon(Icons.add),
+            ringColor: Colors.blue,
+            fabColor: Colors.green,
+            fabElevation: 5.0,
+            children: [
+              Tooltip(
+                message: "Breakfast",
+                child: IconButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Breakfast())),
+                  icon: Icon(
+                    Icons.free_breakfast_outlined,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Tooltip(
-            message: "Lunch",
-            child: IconButton(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Lunch())),
-              icon: Icon(
-                Icons.lunch_dining_outlined,
-                color: Colors.white,
-                size: 20,
+              Tooltip(
+                message: "Lunch",
+                child: IconButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Lunch())),
+                  icon: Icon(
+                    Icons.lunch_dining_outlined,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Tooltip(
-            message: "Eve Snacks",
-            child: IconButton(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Snacks())),
-              icon: Icon(
-                Icons.restaurant_outlined,
-                size: 20,
-                color: Colors.white,
+              Tooltip(
+                message: "Eve Snacks",
+                child: IconButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Snacks())),
+                  icon: Icon(
+                    Icons.restaurant_outlined,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Tooltip(
-            message: "Dinner",
-            child: IconButton(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Dinner())),
-              icon: Icon(
-                Icons.dinner_dining_outlined,
-                color: Colors.white,
-                size: 20,
+              Tooltip(
+                message: "Dinner",
+                child: IconButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Dinner())),
+                  icon: Icon(
+                    Icons.dinner_dining_outlined,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ]));
+            ]));
   }
 }

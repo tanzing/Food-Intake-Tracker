@@ -9,9 +9,14 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final uid = FirebaseAuth.instance.currentUser!.uid;
+  final uid = FirebaseAuth.instance.currentUser!.uid.characters;
   final email = FirebaseAuth.instance.currentUser!.email;
-  final creationTime = FirebaseAuth.instance.currentUser!.metadata.creationTime;
+  final creationDay =
+      FirebaseAuth.instance.currentUser!.metadata.creationTime!.day;
+  final creationMonth =
+      FirebaseAuth.instance.currentUser!.metadata.creationTime!.month;
+  final creationYear =
+      FirebaseAuth.instance.currentUser!.metadata.creationTime!.year;
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -45,13 +50,13 @@ class _ProfileState extends State<Profile> {
             children: [
               Text(
                 'Email: $email',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 16.0, color: Colors.blueAccent),
               ),
             ],
           ),
           Text(
-            'Created: $creationTime',
-            style: TextStyle(fontSize: 16.0),
+            'Created: $creationDay / $creationMonth / $creationYear',
+            style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
           ),
         ],
       ),

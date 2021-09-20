@@ -20,13 +20,7 @@ class Dinner extends StatefulWidget {
 }
 
 class _DinnerState extends State<Dinner> {
-  List<Food> entries = <Food>[
-    Food(name: 'Dosa', calories: 100),
-    Food(name: 'Idli', calories: 100),
-    Food(name: 'Pongal', calories: 100),
-    Food(name: 'Poori', calories: 100),
-    Food(name: 'Masala Dosa', calories: 100),
-  ];
+  List<Food> entries = <Food>[];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _caloriesController = TextEditingController();

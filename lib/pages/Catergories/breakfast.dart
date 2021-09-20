@@ -147,7 +147,6 @@ class _BreakfastState extends State<Breakfast> {
                   child: Text("Add Item"))
             ],
           ),
-        )
-        );
+        ));
   }
 }
