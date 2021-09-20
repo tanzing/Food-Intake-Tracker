@@ -9,9 +9,14 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final uid = FirebaseAuth.instance.currentUser!.uid;
+  final uid = FirebaseAuth.instance.currentUser!.uid.characters;
   final email = FirebaseAuth.instance.currentUser!.email;
-  final creationTime = FirebaseAuth.instance.currentUser!.metadata.creationTime;
+  final creationDay =
+      FirebaseAuth.instance.currentUser!.metadata.creationTime!.day;
+  final creationMonth =
+      FirebaseAuth.instance.currentUser!.metadata.creationTime!.month;
+  final creationYear =
+      FirebaseAuth.instance.currentUser!.metadata.creationTime!.year;
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -34,9 +39,14 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Column(
         children: [
+          CircleAvatar(
+            backgroundImage:
+                NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
+            radius: 50,
+          ),
           Text(
             'User ID: $uid',
             style: TextStyle(fontSize: 16.0),
@@ -45,13 +55,21 @@ class _ProfileState extends State<Profile> {
             children: [
               Text(
                 'Email: $email',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 16.0, color: Colors.blueAccent),
               ),
+              user!.emailVerified
+                  ? Text(
+                      'verified',
+                      style: TextStyle(fontSize: 12.0, color: Colors.blueGrey),
+                    )
+                  : TextButton(
+                      onPressed: () => {verifyEmail()},
+                      child: Text('Verify Email'))
             ],
           ),
           Text(
-            'Created: $creationTime',
-            style: TextStyle(fontSize: 16.0),
+            'Created: $creationDay / $creationMonth / $creationYear',
+            style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
           ),
         ],
       ),

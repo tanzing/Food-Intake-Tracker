@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           return MaterialApp(
-              title: 'Flutter Firebase Login',
+              title: 'Food Tracking System',
               theme: ThemeData(
                 primarySwatch: Colors.green,
               ),
