@@ -42,10 +42,18 @@ class _ProfileState extends State<Profile> {
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Column(
         children: [
-          CircleAvatar(
-            backgroundImage:
-                NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
-            radius: 50,
+          Image.network(
+            'https://www.woolha.com/media/2020/03/eevee.png',
+            // loadingBuilder: (context, child, progress) {
+            //   if (progress.cumulativeBytesLoaded ==
+            //       (progress.expectedTotalBytes ?? 0)) {
+            //     return child;
+            //   } else {
+            //     return Center(
+            //       child: CircularProgressIndicator(),
+            //     );
+            //   }
+            // },
           ),
           Text(
             'User ID: $uid',

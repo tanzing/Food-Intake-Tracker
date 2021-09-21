@@ -61,7 +61,57 @@ class _BreakfastState extends State<Breakfast> {
                               tileColor: Colors.orange[400],
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0)),
-                              onTap: () {},
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return AlertDialog(
+                                        title: Text("Qty"),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text("QTY:"),
+                                                Card(
+                                                  elevation: 5.0,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0)),
+                                                  child: Row(
+                                                    children: [
+                                                      IconButton(
+                                                          splashRadius: 15.0,
+                                                          onPressed: () {},
+                                                          icon: Icon(
+                                                              Icons.remove)),
+                                                      Text("1"),
+                                                      IconButton(
+                                                          splashRadius: 15.0,
+                                                          onPressed: () {},
+                                                          icon:
+                                                              Icon(Icons.add)),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {},
+                                              child: Text(
+                                                "Ok",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1,
+                                              ))
+                                        ],
+                                      );
+                                    });
+                              },
                               trailing: IconButton(
                                 onPressed: () {
                                   setState(() {
