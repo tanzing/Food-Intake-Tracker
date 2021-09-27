@@ -1,6 +1,6 @@
 # food_tracker
 
-A new Flutter project.
+A new Flutter Group project for tracking their Food intake.
 
 ## Getting Started
 
