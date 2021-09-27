@@ -29,6 +29,7 @@ dependencies:
   firebase_core: ^1.4.0
   flutter:
     sdk: flutter
+  syncfusion_flutter_datepicker: ^19.2.62
 
 dev_dependencies:
   flutter_test:

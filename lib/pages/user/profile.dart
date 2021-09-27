@@ -33,6 +33,8 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       );
+    } else {
+      print("Email has been verified");
     }
   }
 
@@ -42,32 +44,29 @@ class _ProfileState extends State<Profile> {
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Column(
         children: [
-          Image.network(
-            'https://www.woolha.com/media/2020/03/eevee.png',
-            // loadingBuilder: (context, child, progress) {
-            //   if (progress.cumulativeBytesLoaded ==
-            //       (progress.expectedTotalBytes ?? 0)) {
-            //     return child;
-            //   } else {
-            //     return Center(
-            //       child: CircularProgressIndicator(),
-            //     );
-            //   }
-            // },
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.indigo,
+            child: Image.network(
+              'https://www.woolha.com/media/2020/03/eevee.png',
+            ),
           ),
           Text(
-            'User ID: $uid',
-            style: TextStyle(fontSize: 16.0),
+            '\nUser ID: $uid',
+            style: TextStyle(fontSize: 16.0, color: Colors.pinkAccent),
           ),
           Row(
             children: [
               Text(
-                'Email: $email',
-                style: TextStyle(fontSize: 16.0, color: Colors.blueAccent),
+                '\nEmail: $email',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.blueAccent,
+                    decorationColor: Colors.blueAccent.shade400),
               ),
               user!.emailVerified
                   ? Text(
-                      'verified',
+                      '        verified',
                       style: TextStyle(fontSize: 12.0, color: Colors.blueGrey),
                     )
                   : TextButton(
@@ -76,7 +75,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
           Text(
-            'Created: $creationDay / $creationMonth / $creationYear',
+            '\nCreated: $creationDay / $creationMonth / $creationYear',
             style: TextStyle(fontSize: 16.0, color: Colors.redAccent),
           ),
         ],
