@@ -34,6 +34,7 @@ class _UserMainState extends State<UserMain> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.indigoAccent.shade100,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -49,7 +50,8 @@ class _UserMainState extends State<UserMain> {
                       (route) => false)
                 },
                 child: Text('Logout'),
-                style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                style:
+                    ElevatedButton.styleFrom(primary: Colors.lightBlueAccent),
               )
             ],
           ),
@@ -58,15 +60,25 @@ class _UserMainState extends State<UserMain> {
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                color: Colors.blue,
+              ),
               label: 'Dashboard',
+              backgroundColor: Colors.deepOrange,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: Colors.deepOrange,
+              ),
               label: 'My Profile',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
+              icon: Icon(
+                Icons.settings,
+                color: Colors.teal,
+              ),
               label: 'Change Password',
             ),
           ],
@@ -76,8 +88,8 @@ class _UserMainState extends State<UserMain> {
         ),
         floatingActionButton: FabCircularMenu(
             fabOpenIcon: Icon(Icons.add),
-            ringColor: Colors.blue,
-            fabColor: Colors.green,
+            ringColor: Colors.blue.shade400,
+            fabColor: Colors.blue.shade200,
             fabElevation: 5.0,
             children: [
               Tooltip(
@@ -87,7 +99,7 @@ class _UserMainState extends State<UserMain> {
                       MaterialPageRoute(builder: (context) => Breakfast())),
                   icon: Icon(
                     Icons.free_breakfast_outlined,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -98,7 +110,7 @@ class _UserMainState extends State<UserMain> {
                       MaterialPageRoute(builder: (context) => Lunch())),
                   icon: Icon(
                     Icons.lunch_dining_outlined,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 20,
                   ),
                 ),
@@ -111,7 +123,7 @@ class _UserMainState extends State<UserMain> {
                   icon: Icon(
                     Icons.restaurant_outlined,
                     size: 20,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -122,7 +134,7 @@ class _UserMainState extends State<UserMain> {
                       MaterialPageRoute(builder: (context) => Dinner())),
                   icon: Icon(
                     Icons.dinner_dining_outlined,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 20,
                   ),
                 ),

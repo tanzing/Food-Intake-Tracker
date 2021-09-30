@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
               home: AnimatedSplashScreen(
                 duration: 4000,
                 splash: Image.asset('assets/image.png'),
-                nextScreen: UserMain(),
+                nextScreen: Login(),
                 splashTransition: SplashTransition.rotationTransition,
-                backgroundColor: Colors.redAccent,
+                backgroundColor: Colors.lightBlue.shade200,
               ));
         });
   }

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:food_tracker/services/firebase.dart';
 import 'package:flutter/material.dart';
 
-final List<int> colorCodes = <int>[50, 400, 200, 600, 800, 900];
-
 class Food {
   String name;
   int calories;

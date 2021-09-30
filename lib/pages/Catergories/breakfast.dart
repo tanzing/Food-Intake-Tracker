@@ -1,9 +1,13 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_tracker/main.dart';
 import 'package:food_tracker/services/firebase.dart';
+import 'package:marquee/marquee.dart';
+import '';
 
 final List<int> colorCodes = <int>[50, 400, 200, 600, 800, 900];
 
@@ -21,11 +25,27 @@ class Food {
   Food({required this.name, required this.calories});
 }
 
+var uid = FirebaseAuth.instance.currentUser!.uid.characters.toString();
+
 class _BreakfastState extends State<Breakfast> {
   List<Food> entries = <Food>[];
 
+  int _counter = 1;
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _caloriesController = TextEditingController();
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (_counter != 0) _counter--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +65,7 @@ class _BreakfastState extends State<Breakfast> {
                           snapshot.data as QuerySnapshot<Map<String, dynamic>>;
                       final List<QueryDocumentSnapshot> data =
                           collectionData.docs;
+
                       return ListView.builder(
                           shrinkWrap: true,
                           padding: const EdgeInsets.only(
@@ -52,75 +73,88 @@ class _BreakfastState extends State<Breakfast> {
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
                             return ListTile(
-                              tileColor: Colors.orange[400],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) {
-                                      return AlertDialog(
-                                        title: Text("Qty"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text("QTY:"),
-                                                Card(
-                                                  elevation: 5.0,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.0)),
-                                                  child: Row(
-                                                    children: [
-                                                      IconButton(
-                                                          splashRadius: 15.0,
-                                                          onPressed: () {},
-                                                          icon: Icon(
-                                                              Icons.remove)),
-                                                      Text("1"),
-                                                      IconButton(
-                                                          splashRadius: 15.0,
-                                                          onPressed: () {},
-                                                          icon:
-                                                              Icon(Icons.add)),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                tileColor: Colors.orange[400],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return AlertDialog(
+                                          title: Text("Qty"),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text("QTY:"),
+                                                  Card(
+                                                    elevation: 5.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0)),
+                                                    child: Row(
+                                                      children: [
+                                                        IconButton(
+                                                            splashRadius: 15.0,
+                                                            onPressed: () =>
+                                                                _decrementCounter(),
+                                                            tooltip:
+                                                                'Decrement',
+                                                            icon: Icon(
+                                                                Icons.remove)),
+                                                        Text(
+                                                          "$_counter",
+                                                        ),
+                                                        IconButton(
+                                                            onPressed:
+                                                                _incrementCounter,
+                                                            tooltip:
+                                                                "increment",
+                                                            icon:
+                                                                Icon(Icons.add))
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "Ok",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle1,
+                                                ))
                                           ],
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {},
-                                              child: Text(
-                                                "Ok",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle1,
-                                              ))
-                                        ],
-                                      );
-                                    });
-                              },
-                              trailing: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    entries.removeAt(index);
-                                  });
+                                        );
+                                      });
                                 },
-                                icon: Icon(Icons.delete_outline),
-                              ),
-                              title: Center(
-                                  child: Center(
-                                child: Text(
-                                  '${(data[index].data() as Map<String, dynamic>)["name"]}',
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    /*
+                                    setState(() {
+                                      var x = collectionData
+                                          .docs[index].reference.id
+                                          .toString();
+
+                                      final collection = FirebaseFirestore
+                                          .instance
+                                          .collection('BreakFast');
+                                      collection.doc(x).delete();
+                                    });
+                                  },*/
+                                  },
+                                  icon: Icon(Icons.delete_outline),
                                 ),
-                              )),
-                            );
+                                title: Text(
+                                    "${(data[index].data() as Map<String, dynamic>)["name"]}"));
                           });
                     } else {
                       return CircularProgressIndicator();
@@ -162,15 +196,21 @@ class _BreakfastState extends State<Breakfast> {
                               TextButton(
                                   onPressed: () {
                                     setState(() {
-                                      // print(_caloriesController.text.trim()
-                                      //     as int);
-
                                       entries.add(Food(
                                           name: _nameController.text,
                                           calories: int.tryParse(
                                                   _caloriesController.text
                                                       .trim()) ??
                                               0));
+
+                                      FirebaseFirestore.instance
+                                          .collection("BreakFast")
+                                          .doc()
+                                          .set({
+                                        'name': _nameController.text,
+                                        'calories': int.tryParse(
+                                            _caloriesController.text.trim())
+                                      });
                                     });
                                     _nameController.clear();
                                     _caloriesController.clear();

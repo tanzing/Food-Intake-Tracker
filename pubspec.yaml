@@ -30,6 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
   syncfusion_flutter_datepicker: ^19.2.62
+  marquee: ^2.2.0
+
 
 dev_dependencies:
   flutter_test:

@@ -18,6 +18,8 @@ class _DashboardState extends State<Dashboard> {
     return Column(
       children: [
         (ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
             child: Text("Date"),
             onPressed: () {
               showDialog(
@@ -46,10 +48,12 @@ class _DashboardState extends State<Dashboard> {
             })),
         if (x != null)
           Text(
-              "${x?.day.toString() ?? ""}/${x?.month.toString() ?? ''}/${x?.year.toString() ?? ''}"),
+            "${x?.day.toString() ?? ""}/${x?.month.toString() ?? ''}/${x?.year.toString() ?? ''}",
+            style: TextStyle(color: Colors.teal.shade500),
+          ),
         Center(
           child: Text(
-            '\n\nCalories Taken By User on \n',
+            '\n\nCalories Taken By User',
             maxLines: 20,
             style: TextStyle(color: Colors.blueAccent, fontSize: 15),
           ),

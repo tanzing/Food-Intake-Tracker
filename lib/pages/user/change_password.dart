@@ -39,7 +39,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           backgroundColor: Colors.orangeAccent,
           content: Text(
             'Your Password has been Changed. Login again !',
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.tealAccent),
           ),
         ),
       );
@@ -76,6 +76,9 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.teal.shade200)),
               onPressed: () {
                 // Validate returns true if the form is valid, otherwise false.
                 if (_formKey.currentState!.validate()) {

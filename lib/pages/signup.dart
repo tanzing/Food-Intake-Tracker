@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,12 +11,56 @@ class Signup extends StatefulWidget {
   _SignupState createState() => _SignupState();
 }
 
+class Food {
+  String name;
+  int calories;
+
+  Food({required this.name, required this.calories});
+}
+
+List<Food> lunch = <Food>[
+  Food(name: 'Curd Rice', calories: 120),
+  Food(name: 'Papad/Appalam', calories: 50),
+  Food(name: 'Rasam', calories: 160),
+  Food(name: 'Sambar ', calories: 150),
+  Food(name: 'Gobi/French Fries', calories: 120),
+  Food(name: 'Chips', calories: 65),
+  Food(name: 'Veg Briyani', calories: 241)
+];
+
+List<Food> snacks = <Food>[
+  Food(name: 'Sundal', calories: 111),
+  Food(name: 'Tea', calories: 80),
+  Food(name: 'Milk', calories: 75),
+  Food(name: 'Fried Peanuts', calories: 250),
+  Food(name: 'Veg Roll', calories: 105),
+  Food(name: 'Samosa', calories: 262),
+];
+
+List<Food> dinner = <Food>[
+  Food(name: 'Gobi', calories: 120),
+  Food(name: 'Kal Dosai', calories: 170),
+  Food(name: 'Roti & Sabji', calories: 95),
+  Food(name: 'Ghee Rice', calories: 225),
+  Food(name: 'Idli & Sabji', calories: 52),
+  Food(name: 'Chicken', calories: 212),
+  Food(name: 'Sambar Rice', calories: 225),
+];
+
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   var email = "";
   var password = "";
   var confirmPassword = "";
+  List<Food> breakfast = <Food>[
+    Food(name: 'Dosa', calories: 120),
+    Food(name: 'Idli', calories: 80),
+    Food(name: 'Pongal', calories: 222),
+    Food(name: 'Poori', calories: 170),
+    Food(name: 'Masala Dosa', calories: 100),
+    Food(name: "Tea", calories: 90),
+  ];
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
   final emailController = TextEditingController();
@@ -37,6 +82,7 @@ class _SignupState extends State<Signup> {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         print(userCredential);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.redAccent,
@@ -46,12 +92,58 @@ class _SignupState extends State<Signup> {
             ),
           ),
         );
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => Login(),
           ),
         );
+        final uid =
+            FirebaseAuth.instance.currentUser!.uid.characters.toString();
+        for (var i = 0; i < 6; i++) {
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(uid)
+              .collection("BreakFast")
+              .doc((i + 1).toString())
+              .set({
+            'name': breakfast[i].name,
+            'calories': breakfast[i].calories
+          });
+        }
+
+        for (var i = 0; i < 7; i++) {
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(uid)
+              .collection("Lunch")
+              .doc((i + 1).toString())
+              .set({'name': lunch[i].name, 'calories': lunch[i].calories});
+        }
+
+        for (var i = 0; i < 7; i++) {
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(uid)
+              .collection("Dinner")
+              .doc((i + 1).toString())
+              .set({'name': dinner[i].name, 'calories': dinner[i].calories});
+        }
+
+        for (var i = 0; i < 6; i++) {
+          FirebaseFirestore.instance
+              .collection("users")
+              .doc(uid)
+              .collection("Snacks")
+              .doc((i + 1).toString())
+              .set({'name': snacks[i].name, 'calories': snacks[i].calories});
+        }
+
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(uid)
+            .collection("Info");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print("Password Provided is too Weak");
