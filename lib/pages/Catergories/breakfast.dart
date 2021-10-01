@@ -25,7 +25,7 @@ class Food {
   Food({required this.name, required this.calories});
 }
 
-var uid = FirebaseAuth.instance.currentUser!.uid.characters.toString();
+final uid = FirebaseAuth.instance.currentUser!.uid.characters.toString();
 
 class _BreakfastState extends State<Breakfast> {
   List<Food> entries = <Food>[];
@@ -58,14 +58,15 @@ class _BreakfastState extends State<Breakfast> {
             children: [
               Text(""),
               FutureBuilder(
-                  future: firestoreServices.getCollection("BreakFast"),
+                  future: firestoreServices.getCollections(
+                      "users", uid, "BreakFast"),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final QuerySnapshot<Map<String, dynamic>> collectionData =
                           snapshot.data as QuerySnapshot<Map<String, dynamic>>;
                       final List<QueryDocumentSnapshot> data =
                           collectionData.docs;
-
+                      print(data);
                       return ListView.builder(
                           shrinkWrap: true,
                           padding: const EdgeInsets.only(
@@ -138,7 +139,6 @@ class _BreakfastState extends State<Breakfast> {
                                 },
                                 trailing: IconButton(
                                   onPressed: () {
-                                    /*
                                     setState(() {
                                       var x = collectionData
                                           .docs[index].reference.id
@@ -146,10 +146,11 @@ class _BreakfastState extends State<Breakfast> {
 
                                       final collection = FirebaseFirestore
                                           .instance
+                                          .collection('users')
+                                          .doc(uid)
                                           .collection('BreakFast');
                                       collection.doc(x).delete();
                                     });
-                                  },*/
                                   },
                                   icon: Icon(Icons.delete_outline),
                                 ),
@@ -204,6 +205,8 @@ class _BreakfastState extends State<Breakfast> {
                                               0));
 
                                       FirebaseFirestore.instance
+                                          .collection("users")
+                                          .doc(uid)
                                           .collection("BreakFast")
                                           .doc()
                                           .set({

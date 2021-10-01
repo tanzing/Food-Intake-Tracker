@@ -25,15 +25,14 @@ class MyApp extends StatelessWidget {
           }
           return MaterialApp(
               title: 'Food Tracking System',
-              theme: ThemeData(
-                primarySwatch: Colors.green,
-              ),
+              theme: ThemeData(accentColor: Colors.lightBlue.shade200),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
                 duration: 4000,
                 splash: Image.asset('assets/image.png'),
                 nextScreen: Login(),
                 splashTransition: SplashTransition.rotationTransition,
+                splashIconSize: 100,
                 backgroundColor: Colors.lightBlue.shade200,
               ));
         });

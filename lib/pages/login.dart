@@ -26,6 +26,11 @@ class _LoginState extends State<Login> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      print("Login Success");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Login Successful"),
+        backgroundColor: Colors.greenAccent,
+      ));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -72,6 +77,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text("User Login"),
+        backgroundColor: Colors.blue.shade200,
       ),
       body: Form(
         key: _formKey,

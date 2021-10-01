@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_tracker/pages/Catergories/breakfast.dart';
 import 'package:food_tracker/services/firebase.dart';
 
 class Food {
@@ -31,7 +32,8 @@ class _LunchState extends State<Lunch> {
             children: [
               Text(""),
               FutureBuilder(
-                  future: firestoreServices.getCollection("Lunch"),
+                  future:
+                      firestoreServices.getCollections("users", uid, "Lunch"),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final QuerySnapshot<Map<String, dynamic>> collectionData =
@@ -102,7 +104,15 @@ class _LunchState extends State<Lunch> {
                               trailing: IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    entries.removeAt(index);
+                                    var x = collectionData
+                                        .docs[index].reference.id
+                                        .toString();
+                                    final collection = FirebaseFirestore
+                                        .instance
+                                        .collection('users')
+                                        .doc(uid)
+                                        .collection('Lunch');
+                                    collection.doc(x).delete();
                                   });
                                 },
                                 icon: Icon(Icons.delete_outline),
@@ -155,15 +165,23 @@ class _LunchState extends State<Lunch> {
                               TextButton(
                                   onPressed: () {
                                     setState(() {
-                                      // print(_caloriesController.text.trim()
-                                      //     as int);
-
                                       entries.add(Food(
                                           name: _nameController.text,
                                           calories: int.tryParse(
                                                   _caloriesController.text
                                                       .trim()) ??
                                               0));
+                                    });
+
+                                    FirebaseFirestore.instance
+                                        .collection("users")
+                                        .doc(uid)
+                                        .collection("Lunch")
+                                        .doc()
+                                        .set({
+                                      'name': _nameController.text,
+                                      'calories':
+                                          int.tryParse(_caloriesController.text)
                                     });
                                     _nameController.clear();
                                     _caloriesController.clear();
