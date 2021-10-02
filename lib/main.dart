@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
           }
           return MaterialApp(
               title: 'Food Tracking System',
-              theme: ThemeData(accentColor: Colors.lightBlue.shade200),
+              theme: ThemeData(
+                accentColor: Colors.lightBlue.shade200,
+              ),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
                 duration: 4000,
