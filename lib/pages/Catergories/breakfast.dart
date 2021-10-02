@@ -1,13 +1,8 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_tracker/main.dart';
 import 'package:food_tracker/services/firebase.dart';
-import 'package:marquee/marquee.dart';
-import '';
 
 final List<int> colorCodes = <int>[50, 400, 200, 600, 800, 900];
 

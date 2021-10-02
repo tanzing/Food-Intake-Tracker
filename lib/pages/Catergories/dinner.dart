@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_tracker/pages/Catergories/breakfast.dart';
 import 'package:food_tracker/services/firebase.dart';
-import 'package:flutter/material.dart';
 
 class Food {
   String name;
