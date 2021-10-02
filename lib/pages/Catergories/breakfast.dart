@@ -1,13 +1,8 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_tracker/main.dart';
 import 'package:food_tracker/services/firebase.dart';
-import 'package:marquee/marquee.dart';
-import '';
 
 final List<int> colorCodes = <int>[50, 400, 200, 600, 800, 900];
 
@@ -30,22 +25,8 @@ final uid = FirebaseAuth.instance.currentUser!.uid.characters.toString();
 class _BreakfastState extends State<Breakfast> {
   List<Food> entries = <Food>[];
 
-  int _counter = 1;
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _caloriesController = TextEditingController();
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      if (_counter != 0) _counter--;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,60 +62,7 @@ class _BreakfastState extends State<Breakfast> {
                                   showDialog(
                                       context: context,
                                       builder: (_) {
-                                        return AlertDialog(
-                                          title: Text("Qty"),
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text("QTY:"),
-                                                  Card(
-                                                    elevation: 5.0,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0)),
-                                                    child: Row(
-                                                      children: [
-                                                        IconButton(
-                                                            splashRadius: 15.0,
-                                                            onPressed: () =>
-                                                                _decrementCounter(),
-                                                            tooltip:
-                                                                'Decrement',
-                                                            icon: Icon(
-                                                                Icons.remove)),
-                                                        Text(
-                                                          "$_counter",
-                                                        ),
-                                                        IconButton(
-                                                            onPressed:
-                                                                _incrementCounter,
-                                                            tooltip:
-                                                                "increment",
-                                                            icon:
-                                                                Icon(Icons.add))
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {},
-                                                child: Text(
-                                                  "Ok",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .subtitle1,
-                                                ))
-                                          ],
-                                        );
+                                        return QuantityDialog();
                                       });
                                 },
                                 trailing: IconButton(
@@ -235,5 +163,74 @@ class _BreakfastState extends State<Breakfast> {
             ],
           ),
         ));
+  }
+}
+
+class QuantityDialog extends StatefulWidget {
+  const QuantityDialog({Key? key}) : super(key: key);
+
+  @override
+  _QuantityDialogState createState() => _QuantityDialogState();
+}
+
+class _QuantityDialogState extends State<QuantityDialog> {
+  int _counter = 1;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (_counter != 0) _counter--;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Qty"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Text("QTY:"),
+              Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0)),
+                child: Row(
+                  children: [
+                    IconButton(
+                        splashRadius: 15.0,
+                        onPressed: () => _decrementCounter(),
+                        tooltip: 'Decrement',
+                        icon: Icon(Icons.remove)),
+                    Text(
+                      "$_counter",
+                    ),
+                    IconButton(
+                        onPressed: _incrementCounter,
+                        tooltip: "increment",
+                        icon: Icon(Icons.add))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {},
+            child: Text(
+              "Ok",
+              style: Theme.of(context).textTheme.subtitle1,
+            ))
+      ],
+    );
   }
 }

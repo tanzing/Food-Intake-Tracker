@@ -2,7 +2,6 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_tracker/pages/login.dart';
-import 'package:food_tracker/pages/user/user_main.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +24,9 @@ class MyApp extends StatelessWidget {
           }
           return MaterialApp(
               title: 'Food Tracking System',
-              theme: ThemeData(accentColor: Colors.lightBlue.shade200),
+              theme: ThemeData(
+                accentColor: Colors.lightBlue.shade200,
+              ),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
                 duration: 4000,
