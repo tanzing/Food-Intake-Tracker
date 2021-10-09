@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:food_tracker/main.dart';
+import 'package:food_tracker/pages/Catergories/breakfast.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+int? calories;
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
@@ -10,9 +16,56 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
+Future<void> calorieFinder() async {
+  var collection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('Date');
+  var docSnapshot = await collection.doc('$x').get();
+  if (docSnapshot.exists) {
+    Map<String, dynamic>? data = docSnapshot.data();
+    calories = data!['calories'];
+  }
+}
+
+int check = 0;
+void createDate(String m) {
+  FirebaseFirestore.instance
+      .collection("users")
+      .doc(uid)
+      .collection("Date")
+      .doc('$x')
+      .set({'calories': 0});
+}
+
+// ignore: non_constant_identifier_names
+var Value = -99;
+Future<void> checker() async {
+  var collection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('Date');
+  var docSnapshot = await collection.doc('$x').get();
+  if (docSnapshot.exists) {
+    Map<String, dynamic>? data = docSnapshot.data();
+    Value = data!['calories'];
+    print(Value);
+    if (Value == -99) {
+      check = 0;
+      createDate(x!);
+    } else {
+      check = 1;
+    }
+  } else {
+    createDate(x!);
+    print(Value);
+    check = 0;
+  }
+}
+
 class _DashboardState extends State<Dashboard> {
   String temp = "";
-  DateTime? x;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +86,12 @@ class _DashboardState extends State<Dashboard> {
                           child: SfDateRangePicker(
                             onSubmit: (Object value) {
                               setState(() {
-                                x = DateTime.tryParse(value.toString())!;
+                                String timeStamp = value.toString();
+                                dateTime = DateTime.parse(timeStamp);
+                                x = DateFormat("dd-MM-yyyy").format(dateTime!);
+
+                                checker();
+                                calorieFinder();
                               });
 
                               Navigator.pop(context);
@@ -48,26 +106,34 @@ class _DashboardState extends State<Dashboard> {
             })),
         if (x != null)
           Text(
-            "${x?.day.toString() ?? ""}/${x?.month.toString() ?? ''}/${x?.year.toString() ?? ''}",
+            "$x",
             style: TextStyle(color: Colors.teal.shade500),
           ),
         Center(
           child: Text(
-            '\n\nCalories Taken By User',
-            maxLines: 20,
-            style: TextStyle(color: Colors.blueAccent, fontSize: 15),
+            '\n\nCalories Taken By User\n\n',
+            maxLines: 10,
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontSize: 15,
+            ),
           ),
         ),
         Container(
-          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+              color: Colors.amber[600]!.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(12)),
+          margin: EdgeInsets.symmetric(vertical: 10.0),
           child: TextFormField(
-              showCursor: false,
-              readOnly: true,
-              decoration: InputDecoration(
-                  labelText: "",
-                  labelStyle:
-                      TextStyle(color: Colors.orangeAccent, fontSize: 15),
-                  border: OutlineInputBorder())),
+            autofocus: false,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+                hintText: '$calories',
+                hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                border: InputBorder.none),
+            readOnly: true,
+            showCursor: false,
+          ),
         )
       ],
     );

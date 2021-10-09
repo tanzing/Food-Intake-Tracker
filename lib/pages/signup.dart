@@ -296,7 +296,7 @@ class _SignupState extends State<Signup> {
                                   pageBuilder:
                                       (context, animation1, animation2) =>
                                           Login(),
-                                  transitionDuration: Duration(seconds: 0),
+                                  transitionDuration: Duration(seconds: 3),
                                 ),
                               )
                             },

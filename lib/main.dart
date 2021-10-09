@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_tracker/pages/login.dart';
 
+DateTime? dateTime;
+String? x;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -29,11 +31,11 @@ class MyApp extends StatelessWidget {
               ),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
-                duration: 4000,
-                splash: Image.asset('assets/image.png'),
+                duration: 2000,
+                splash: Image.asset('assets/bg.jpg'),
                 nextScreen: Login(),
                 splashTransition: SplashTransition.rotationTransition,
-                splashIconSize: 100,
+                splashIconSize: 200,
                 backgroundColor: Colors.lightBlue.shade200,
               ));
         });
