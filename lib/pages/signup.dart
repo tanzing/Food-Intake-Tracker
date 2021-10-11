@@ -101,6 +101,10 @@ class _SignupState extends State<Signup> {
         );
         final uid =
             FirebaseAuth.instance.currentUser!.uid.characters.toString();
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(uid)
+            .collection("Date");
         for (var i = 0; i < 6; i++) {
           FirebaseFirestore.instance
               .collection("users")

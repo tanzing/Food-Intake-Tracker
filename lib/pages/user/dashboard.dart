@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 int? calories;
+final uids = FirebaseAuth.instance.currentUser!.uid.characters.toString();
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class Dashboard extends StatefulWidget {
 Future<void> calorieFinder() async {
   var collection = FirebaseFirestore.instance
       .collection('users')
-      .doc(uid)
+      .doc(uids)
       .collection('Date');
   var docSnapshot = await collection.doc('$x').get();
   if (docSnapshot.exists) {
@@ -32,7 +33,7 @@ int check = 0;
 void createDate(String m) {
   FirebaseFirestore.instance
       .collection("users")
-      .doc(uid)
+      .doc(uids)
       .collection("Date")
       .doc('$x')
       .set({'calories': 0});
@@ -43,7 +44,7 @@ var Value = -99;
 Future<void> checker() async {
   var collection = FirebaseFirestore.instance
       .collection('users')
-      .doc(uid)
+      .doc(uids)
       .collection('Date');
   var docSnapshot = await collection.doc('$x').get();
   if (docSnapshot.exists) {

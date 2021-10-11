@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_tracker/main.dart';
+import 'package:food_tracker/pages/user/dashboard.dart';
 import 'package:food_tracker/services/firebase.dart';
 
 final List<int> colorCodes = <int>[50, 400, 200, 600, 800, 900];
@@ -225,7 +227,27 @@ class _QuantityDialogState extends State<QuantityDialog> {
       ),
       actions: [
         TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              var tmp = FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(uid)
+                  .collection("Breakfast");
+              var calo;
+              var querysnapshot = await tmp.get();
+              for (var i in querysnapshot.docs) {
+                Map<String, dynamic> data = i.data();
+                calo = data['calories'];
+              }
+
+              print(calo);
+
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(uid)
+                  .collection("Date")
+                  .doc(x)
+                  .update({'calories': calo + calories!});
+            },
             child: Text(
               "Ok",
               style: Theme.of(context).textTheme.subtitle1,
