@@ -18,6 +18,9 @@ class Food {
   Food({required this.name, required this.calories});
 }
 
+String p =
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
 List<Food> lunch = <Food>[
   Food(name: 'Curd Rice', calories: 120),
   Food(name: 'Papad/Appalam', calories: 50),
@@ -77,7 +80,7 @@ class _SignupState extends State<Signup> {
   }
 
   registration() async {
-    if (password == confirmPassword) {
+    if (password == confirmPassword && RegExp(p).hasMatch(email)) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
@@ -143,11 +146,6 @@ class _SignupState extends State<Signup> {
               .doc((i + 1).toString())
               .set({'name': snacks[i].name, 'calories': snacks[i].calories});
         }
-
-        FirebaseFirestore.instance
-            .collection("users")
-            .doc(uid)
-            .collection("Info");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print("Password Provided is too Weak");
@@ -173,13 +171,35 @@ class _SignupState extends State<Signup> {
           );
         }
       }
-    } else {
+    } else if (password != confirmPassword) {
       print("Password and Confirm Password doesn't match");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.orangeAccent,
           content: Text(
             "Password and Confirm Password doesn't match",
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
+          ),
+        ),
+      );
+    } else if (!RegExp(p).hasMatch(email)) {
+      print("Enter Valid Email");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.orangeAccent,
+          content: Text(
+            "Email Id is not valid",
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
+          ),
+        ),
+      );
+    } else {
+      print("Recheck All your Fields");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.orangeAccent,
+          content: Text(
+            "Recheck all your fields, restart the app",
             style: TextStyle(fontSize: 16.0, color: Colors.black),
           ),
         ),

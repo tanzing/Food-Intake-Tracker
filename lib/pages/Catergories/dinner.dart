@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:food_tracker/main.dart';
 import 'package:food_tracker/pages/Catergories/breakfast.dart';
+import 'package:food_tracker/pages/user/dashboard.dart';
 import 'package:food_tracker/services/firebase.dart';
 
 class Food {
@@ -56,50 +58,8 @@ class _DinnerState extends State<Dinner> {
                                 showDialog(
                                     context: context,
                                     builder: (_) {
-                                      return AlertDialog(
-                                        title: Text("Qty"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text("QTY:"),
-                                                Card(
-                                                  elevation: 5.0,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.0)),
-                                                  child: Row(
-                                                    children: [
-                                                      IconButton(
-                                                          splashRadius: 15.0,
-                                                          onPressed: () {},
-                                                          icon: Icon(
-                                                              Icons.remove)),
-                                                      Text("1"),
-                                                      IconButton(
-                                                          splashRadius: 15.0,
-                                                          onPressed: () {},
-                                                          icon:
-                                                              Icon(Icons.add)),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {},
-                                              child: Text(
-                                                "Ok",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle1,
-                                              ))
-                                        ],
+                                      return QuantityDialog(
+                                        id: data[index].reference.id.toString(),
                                       );
                                     });
                               },
@@ -205,5 +165,100 @@ class _DinnerState extends State<Dinner> {
             ],
           ),
         ));
+  }
+}
+
+class QuantityDialog extends StatefulWidget {
+  final String id;
+  const QuantityDialog({Key? key, required this.id}) : super(key: key);
+
+  @override
+  _QuantityDialogState createState() => _QuantityDialogState();
+}
+
+class _QuantityDialogState extends State<QuantityDialog> {
+  int _counter = 1;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (_counter != 0) _counter--;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var docid = widget.id;
+
+    return AlertDialog(
+      title: Text("Qty"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Text("QTY:"),
+              Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0)),
+                child: Row(
+                  children: [
+                    IconButton(
+                        splashRadius: 15.0,
+                        onPressed: () => _decrementCounter(),
+                        tooltip: 'Decrement',
+                        icon: Icon(Icons.remove)),
+                    Text(
+                      "$_counter",
+                    ),
+                    IconButton(
+                        onPressed: _incrementCounter,
+                        tooltip: "increment",
+                        icon: Icon(Icons.add))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () async {
+              var collection = await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(uid)
+                  .collection("Dinner")
+                  .doc(docid)
+                  .get();
+              Map<String, dynamic>? data;
+
+              if (collection.exists) {
+                data = collection.data();
+              }
+
+              var cal = data?['calories'];
+
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(uid)
+                  .collection("Date")
+                  .doc(x)
+                  .update({'calories': (cal * _counter) + calories!});
+
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Ok",
+              style: Theme.of(context).textTheme.subtitle1,
+            ))
+      ],
+    );
   }
 }

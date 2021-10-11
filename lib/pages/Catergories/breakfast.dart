@@ -64,7 +64,12 @@ class _BreakfastState extends State<Breakfast> {
                                   showDialog(
                                       context: context,
                                       builder: (_) {
-                                        return QuantityDialog();
+                                        return QuantityDialog(
+                                          id: data[index]
+                                              .reference
+                                              .id
+                                              .toString(),
+                                        );
                                       });
                                 },
                                 trailing: IconButton(
@@ -85,7 +90,7 @@ class _BreakfastState extends State<Breakfast> {
                                   icon: Icon(Icons.delete_outline),
                                 ),
                                 title: Text(
-                                    "${(data[index].data() as Map<String, dynamic>)["name"]}"));
+                                    "${(data[index].data() as Map<String, dynamic>)["name"]}   "));
                           });
                     } else {
                       return CircularProgressIndicator();
@@ -169,7 +174,8 @@ class _BreakfastState extends State<Breakfast> {
 }
 
 class QuantityDialog extends StatefulWidget {
-  const QuantityDialog({Key? key}) : super(key: key);
+  final String id;
+  const QuantityDialog({Key? key, required this.id}) : super(key: key);
 
   @override
   _QuantityDialogState createState() => _QuantityDialogState();
@@ -192,6 +198,8 @@ class _QuantityDialogState extends State<QuantityDialog> {
 
   @override
   Widget build(BuildContext context) {
+    var docid = widget.id;
+
     return AlertDialog(
       title: Text("Qty"),
       content: Column(
@@ -228,25 +236,28 @@ class _QuantityDialogState extends State<QuantityDialog> {
       actions: [
         TextButton(
             onPressed: () async {
-              var tmp = FirebaseFirestore.instance
+              var collection = await FirebaseFirestore.instance
                   .collection("users")
                   .doc(uid)
-                  .collection("Breakfast");
-              var calo;
-              var querysnapshot = await tmp.get();
-              for (var i in querysnapshot.docs) {
-                Map<String, dynamic> data = i.data();
-                calo = data['calories'];
+                  .collection("BreakFast")
+                  .doc(docid)
+                  .get();
+              Map<String, dynamic>? data;
+
+              if (collection.exists) {
+                data = collection.data();
               }
 
-              print(calo);
+              var cal = data?['calories'];
 
               FirebaseFirestore.instance
                   .collection("users")
                   .doc(uid)
                   .collection("Date")
                   .doc(x)
-                  .update({'calories': calo + calories!});
+                  .update({'calories': (cal * _counter) + calories!});
+
+              Navigator.pop(context);
             },
             child: Text(
               "Ok",

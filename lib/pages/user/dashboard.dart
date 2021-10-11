@@ -95,6 +95,14 @@ class _DashboardState extends State<Dashboard> {
                                 calorieFinder();
                               });
 
+                              setState(() {
+                                String timeStamp = value.toString();
+                                dateTime = DateTime.parse(timeStamp);
+                                x = DateFormat("dd-MM-yyyy").format(dateTime!);
+                                checker();
+                                calorieFinder();
+                              });
+
                               Navigator.pop(context);
                             },
                             onCancel: () {
