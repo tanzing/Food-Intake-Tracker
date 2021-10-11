@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_tracker/main.dart';
@@ -71,7 +72,34 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        (ElevatedButton(
+        Tooltip(
+          waitDuration: Duration(seconds: 1),
+          showDuration: Duration(seconds: 2),
+          textStyle: TextStyle(
+              fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal),
+          message: 'Refresh to view calorie changes',
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10), color: Colors.green),
+          height: 20,
+          child: IconButton(
+              onPressed: () async {
+                var collection = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(uids)
+                    .collection('Date');
+                var docSnapshot = await collection.doc('$x').get();
+                setState(() {
+                  if (docSnapshot.exists) {
+                    Map<String, dynamic>? data = docSnapshot.data();
+                    calories = data!['calories'];
+                  }
+                });
+              },
+              splashRadius: 15,
+              padding: EdgeInsets.all(40),
+              icon: Icon(Icons.refresh_outlined)),
+        ),
+        ElevatedButton(
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
             child: Text("Date"),
@@ -112,25 +140,25 @@ class _DashboardState extends State<Dashboard> {
                           )),
                     );
                   });
-            })),
+            }),
         if (x != null)
           Text(
-            "$x",
-            style: TextStyle(color: Colors.teal.shade500),
+            "$x\n",
+            style: TextStyle(color: Colors.teal.shade500, fontSize: 15),
           ),
         Center(
           child: Text(
-            '\n\nCalories Taken By User\n\n',
+            '\nCalories Taken By User',
             maxLines: 10,
             style: TextStyle(
               color: Colors.blueAccent,
-              fontSize: 15,
+              fontSize: 20,
             ),
           ),
         ),
         Container(
           decoration: BoxDecoration(
-              color: Colors.amber[600]!.withOpacity(0.5),
+              color: Colors.green.shade50,
               borderRadius: BorderRadius.circular(12)),
           margin: EdgeInsets.symmetric(vertical: 10.0),
           child: TextFormField(

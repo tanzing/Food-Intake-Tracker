@@ -47,9 +47,7 @@ class _ProfileState extends State<Profile> {
           CircleAvatar(
             radius: 50,
             backgroundColor: Colors.indigo,
-            child: Image.network(
-              'https://www.woolha.com/media/2020/03/eevee.png',
-            ),
+            backgroundImage: AssetImage('assets/avatar.png'),
           ),
           Text(
             '\nUser ID: $uid',

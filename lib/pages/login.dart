@@ -220,14 +220,19 @@ class _LoginState extends State<Login> {
                               userLogin();
                             }
                           },
-                          child: Container(
-                            margin: EdgeInsets.all(10),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 18.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                         Container(
@@ -246,11 +251,15 @@ class _LoginState extends State<Login> {
                                         pageBuilder: (context, a, b) =>
                                             Signup(),
                                         transitionDuration:
-                                            Duration(seconds: 2000),
+                                            Duration(seconds: 4),
                                       ),
                                       (route) => false)
                                 },
-                                child: Text('Signup'),
+                                child: Column(
+                                  children: [
+                                    Text('Signup'),
+                                  ],
+                                ),
                               ),
                               // TextButton(
                               //   onPressed: () => {

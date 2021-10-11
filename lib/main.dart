@@ -31,11 +31,11 @@ class MyApp extends StatelessWidget {
               ),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
-                duration: 2000,
-                splash: Image.asset('assets/bg.jpg'),
+                duration: 3000,
+                splash: Image.asset('assets/cleangym.jpg'),
                 nextScreen: Login(),
-                splashTransition: SplashTransition.rotationTransition,
-                splashIconSize: 200,
+                splashTransition: SplashTransition.slideTransition,
+                splashIconSize: 250,
                 backgroundColor: Colors.lightBlue.shade200,
               ));
         });
