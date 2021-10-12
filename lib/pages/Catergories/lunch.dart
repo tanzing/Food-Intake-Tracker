@@ -229,28 +229,39 @@ class _QuantityDialogState extends State<QuantityDialog> {
       actions: [
         TextButton(
             onPressed: () async {
-              var collection = await FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(uid)
-                  .collection("Lunch")
-                  .doc(docid)
-                  .get();
-              Map<String, dynamic>? data;
+              setState(() async {
+                var collectio = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(uids)
+                    .collection('Date');
+                var docSnapshot = await collectio.doc('$x').get();
+                if (docSnapshot.exists) {
+                  Map<String, dynamic>? data = docSnapshot.data();
+                  calories = data!['calories'];
+                }
+                var collection = await FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(uid)
+                    .collection("Lunch")
+                    .doc(docid)
+                    .get();
+                Map<String, dynamic>? data;
 
-              if (collection.exists) {
-                data = collection.data();
-              }
+                if (collection.exists) {
+                  data = collection.data();
+                }
 
-              var cal = data?['calories'];
+                var cal = data?['calories'];
 
-              FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(uid)
-                  .collection("Date")
-                  .doc(x)
-                  .update({'calories': (cal * _counter) + calories!});
+                FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(uid)
+                    .collection("Date")
+                    .doc(x)
+                    .update({'calories': (cal * _counter) + calories!});
 
-              Navigator.pop(context);
+                Navigator.pop(context);
+              });
             },
             child: Text(
               "Ok",

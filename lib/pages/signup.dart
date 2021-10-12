@@ -28,25 +28,25 @@ List<Food> lunch = <Food>[
   Food(name: 'Sambar ', calories: 150),
   Food(name: 'Gobi/French Fries', calories: 120),
   Food(name: 'Chips', calories: 65),
-  Food(name: 'Veg Briyani', calories: 241)
+  Food(name: 'Veg Briyani', calories: 180)
 ];
 
 List<Food> snacks = <Food>[
   Food(name: 'Sundal', calories: 111),
-  Food(name: 'Tea', calories: 80),
-  Food(name: 'Milk', calories: 75),
-  Food(name: 'Fried Peanuts', calories: 250),
+  Food(name: 'Tea', calories: 30),
+  Food(name: 'Milk', calories: 25),
+  Food(name: 'Fried Peanuts', calories: 145),
   Food(name: 'Veg Roll', calories: 105),
-  Food(name: 'Samosa', calories: 262),
+  Food(name: 'Samosa', calories: 190),
 ];
 
 List<Food> dinner = <Food>[
   Food(name: 'Gobi', calories: 120),
-  Food(name: 'Kal Dosai', calories: 170),
-  Food(name: 'Roti & Sabji', calories: 95),
-  Food(name: 'Ghee Rice', calories: 225),
-  Food(name: 'Idli & Sabji', calories: 52),
-  Food(name: 'Chicken', calories: 212),
+  Food(name: 'Kal Dosai', calories: 130),
+  Food(name: 'Roti & Sabji', calories: 75),
+  Food(name: 'Ghee Rice', calories: 150),
+  Food(name: 'Idli & Sabji', calories: 60),
+  Food(name: 'Chicken', calories: 200),
   Food(name: 'Sambar Rice', calories: 225),
 ];
 
@@ -57,12 +57,12 @@ class _SignupState extends State<Signup> {
   var password = "";
   var confirmPassword = "";
   List<Food> breakfast = <Food>[
-    Food(name: 'Dosa', calories: 120),
-    Food(name: 'Idli', calories: 80),
-    Food(name: 'Pongal', calories: 222),
-    Food(name: 'Poori', calories: 170),
+    Food(name: 'Dosa', calories: 75),
+    Food(name: 'Idli', calories: 45),
+    Food(name: 'Pongal', calories: 212),
+    Food(name: 'Poori', calories: 80),
     Food(name: 'Masala Dosa', calories: 100),
-    Food(name: "Tea", calories: 90),
+    Food(name: "Tea", calories: 30),
   ];
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
