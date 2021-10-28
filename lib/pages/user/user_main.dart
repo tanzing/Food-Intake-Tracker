@@ -38,7 +38,7 @@ class _UserMainState extends State<UserMain> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Welcome To Your Diet Tracker"),
+              Text("Diet Tracker"),
               ElevatedButton(
                 onPressed: () async => {
                   await FirebaseAuth.instance.signOut(),

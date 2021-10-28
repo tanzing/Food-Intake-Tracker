@@ -74,18 +74,47 @@ class _BreakfastState extends State<Breakfast> {
                                 },
                                 trailing: IconButton(
                                   onPressed: () {
-                                    setState(() {
-                                      var x = collectionData
-                                          .docs[index].reference.id
-                                          .toString();
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text("Delete"),
+                                              content: Text(
+                                                  "Do you want to delete this record permenently?"),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () async =>
+                                                        Navigator.pop(context),
+                                                    child: Text("Cancel")),
+                                                TextButton(
+                                                    onPressed: () async {
+                                                      var x = collectionData
+                                                          .docs[index]
+                                                          .reference
+                                                          .id
+                                                          .toString();
 
-                                      final collection = FirebaseFirestore
-                                          .instance
-                                          .collection('users')
-                                          .doc(uid)
-                                          .collection('BreakFast');
-                                      collection.doc(x).delete();
-                                    });
+                                                      final collection =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'users')
+                                                              .doc(uid)
+                                                              .collection(
+                                                                  'BreakFast');
+                                                      await collection
+                                                          .doc(x)
+                                                          .delete();
+                                                      setState(() {});
+
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text(
+                                                      "Delete",
+                                                      style: TextStyle(
+                                                          color: Colors.red),
+                                                    ))
+                                              ],
+                                            ));
                                   },
                                   icon: Icon(Icons.delete_outline),
                                 ),
@@ -114,6 +143,7 @@ class _BreakfastState extends State<Breakfast> {
                                         labelText: "Item Name",
                                         border: OutlineInputBorder()),
                                     controller: _nameController,
+                                    keyboardType: TextInputType.name,
                                   ),
                                 ),
                                 Padding(
@@ -192,7 +222,7 @@ class _QuantityDialogState extends State<QuantityDialog> {
 
   void _decrementCounter() {
     setState(() {
-      if (_counter != 0) _counter--;
+      if (_counter != 1) _counter--;
     });
   }
 
@@ -273,7 +303,11 @@ class _QuantityDialogState extends State<QuantityDialog> {
             child: Text(
               "Ok",
               style: Theme.of(context).textTheme.subtitle1,
-            ))
+            )),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child:
+                Text("Cancel", style: Theme.of(context).textTheme.subtitle1)),
       ],
     );
   }

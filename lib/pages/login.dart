@@ -84,11 +84,8 @@ class _LoginState extends State<Login> {
         blendMode: BlendMode.darken,
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.amber,
-              image: DecorationImage(
-                  image: NetworkImage(
-                      'https://png.pngtree.com/background/20210712/original/pngtree-modern-double-color-futuristic-neon-background-picture-image_1181573.jpg'),
-                  fit: BoxFit.cover)),
+            color: Colors.amber,
+          ),
           child: Scaffold(
             appBar: AppBar(
               title: Text("Login"),

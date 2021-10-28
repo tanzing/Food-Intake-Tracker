@@ -2,7 +2,7 @@
     package="com.example.food_tracker">
    <application
         android:label="food_tracker"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

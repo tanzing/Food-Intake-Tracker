@@ -64,17 +64,43 @@ class _SnacksState extends State<Snacks> {
                               },
                               trailing: IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                    var x = collectionData
-                                        .docs[index].reference.id
-                                        .toString();
-                                    final collection = FirebaseFirestore
-                                        .instance
-                                        .collection('users')
-                                        .doc(uid)
-                                        .collection('Snacks');
-                                    collection.doc(x).delete();
-                                  });
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: Text("Delete"),
+                                            content: Text(
+                                                "Do you want to delete this record permenently?"),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () async =>
+                                                      Navigator.pop(context),
+                                                  child: Text("Cancel")),
+                                              TextButton(
+                                                  onPressed: () async {
+                                                    var x = collectionData
+                                                        .docs[index]
+                                                        .reference
+                                                        .id
+                                                        .toString();
+                                                    final collection =
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection('users')
+                                                            .doc(uid)
+                                                            .collection(
+                                                                'Snacks');
+                                                    collection.doc(x).delete();
+
+                                                    setState(() {});
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    "Delete",
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ))
+                                            ],
+                                          ));
                                 },
                                 icon: Icon(Icons.delete_outline),
                               ),
@@ -267,7 +293,11 @@ class _QuantityDialogState extends State<QuantityDialog> {
             child: Text(
               "Ok",
               style: Theme.of(context).textTheme.subtitle1,
-            ))
+            )),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child:
+                Text("Cancel", style: Theme.of(context).textTheme.subtitle1)),
       ],
     );
   }

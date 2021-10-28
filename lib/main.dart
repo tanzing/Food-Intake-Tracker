@@ -5,6 +5,7 @@ import 'package:food_tracker/pages/login.dart';
 
 DateTime? dateTime;
 String? x;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
                 duration: 3000,
-                splash: Image.asset('assets/cleangym.jpg'),
+                splash: Image.asset('assets/logo.png'),
                 nextScreen: Login(),
                 splashTransition: SplashTransition.slideTransition,
                 splashIconSize: 250,
