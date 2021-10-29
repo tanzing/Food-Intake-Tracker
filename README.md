@@ -1,16 +1,14 @@
-# food_tracker
+# Food_Tracker
 
-A new Flutter Group project for tracking their Food intake.
+A new Flutter Group project for tracking one's Food intake. Tailor-Made to suit Ssn Gym Studnets. 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+The project Demo Link
+https://youtu.be/jPgqfqppdR4
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+The project is yet to be verified by Play protect. So you might find the warning saying that this app might be harmful. This app doesn't get any of your details. So its fully safe to use this application. 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+APK LINK https://github.com/vasu-0907/Food-Intake-Tracker/releases/download/flutter/Food.Tracker.apk
+
