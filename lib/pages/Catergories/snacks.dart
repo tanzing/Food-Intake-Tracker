@@ -269,7 +269,7 @@ class _QuantityDialogState extends State<QuantityDialog> {
                 var collection = await FirebaseFirestore.instance
                     .collection("users")
                     .doc(uid)
-                    .collection("Lunch")
+                    .collection("Snacks")
                     .doc(docid)
                     .get();
                 Map<String, dynamic>? data;
